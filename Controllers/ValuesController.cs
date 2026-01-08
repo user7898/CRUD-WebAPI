@@ -19,28 +19,42 @@ namespace webapi.Controllers
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        [Route("GetById/{id}")]
+        public IActionResult GetById(int id)
         {
-            return "value";
+            var employees = db.SelectById(id);
+
+            if (employees == null || employees.Count == 0)
+                return NotFound("Employee not found");
+            return Ok(employees);
         }
 
         // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("PostTab")]
+        public IActionResult Post(Employee objcls)
         {
+            db.InsertDB(objcls);
+            return Ok("Successfully Inserted");
         }
 
         // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [Route("UpdatebyId/{id}")]
+        public IActionResult Put(int id, Employee employee)
         {
+            db.Update(id,employee);
+            return Ok("Data Updated Successfully");
         }
 
         // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("Deletetab/{id}")]
+        public IActionResult Delete(int id)
         {
+            db.DeleteById(id);
+            return Ok("Deleted Successfully");
         }
     }
 }

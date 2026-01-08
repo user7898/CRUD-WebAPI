@@ -66,13 +66,13 @@ namespace webapi.Models
             }
         }
 
-        public string Update(Employee emp)
+        public string Update(int id,Employee emp)
         {
             try
             {
                 SqlCommand cmd = new SqlCommand("Emp_Update", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Emp_Id", emp.Eid);
+                cmd.Parameters.AddWithValue("@Emp_Id",id);
                 cmd.Parameters.AddWithValue("@Emp_Name", emp.Name);
                 cmd.Parameters.AddWithValue("@Emp_Address", emp.Address);
                 cmd.Parameters.AddWithValue("@Emp_Salary", emp.Salary);
